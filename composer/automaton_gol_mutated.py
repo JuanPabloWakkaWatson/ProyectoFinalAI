@@ -3,6 +3,37 @@ import numpy as np
 import os
 from datetime import datetime
 
+def generar_gol(steps=128, grid_size=(32, 32), mutation_rate=0.02, output_dir="GoL/evolucionesGoL/tmp"):
+    initial = np.random.choice([0, 1], size=grid_size, p=[0.7, 0.3])
+
+    def count_neighbors(grid, x, y):
+        return sum(grid[(x + dx) % grid.shape[0], (y + dy) % grid.shape[1]]
+                   for dx in [-1, 0, 1] for dy in [-1, 0, 1] if not (dx == 0 and dy == 0))
+
+    def step(grid):
+        new_grid = np.zeros_like(grid)
+        for x in range(grid.shape[0]):
+            for y in range(grid.shape[1]):
+                neighbors = count_neighbors(grid, x, y)
+                if grid[x, y] == 1 and neighbors in [2, 3]:
+                    new_grid[x, y] = 1
+                elif grid[x, y] == 0 and neighbors == 3:
+                    new_grid[x, y] = 1
+        mutation = np.random.rand(*grid.shape) < mutation_rate
+        return np.logical_xor(new_grid, mutation).astype(int)
+
+    history = [initial]
+    current = initial
+    for _ in range(steps):
+        current = step(current)
+        history.append(current.copy())
+
+    os.makedirs(output_dir, exist_ok=True)
+    path = os.path.join(output_dir, "gol.npy")
+    np.save(path, np.array(history))
+    return path
+
+
 def count_neighbors(grid, x, y):
     total = 0
     for dx in [-1, 0, 1]:

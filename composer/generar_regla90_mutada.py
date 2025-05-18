@@ -3,6 +3,28 @@ import numpy as np
 import os
 from datetime import datetime
 
+def generar_regla90(steps=128, width=64, mutation_rate=0.02, output_dir="Regla90/evoluciones_1d/tmp"):
+    import numpy as np
+    import os
+
+    def step(current):
+        padded = np.pad(current, (1, 1), mode='wrap')
+        next_ = np.bitwise_xor(padded[:-2], padded[2:])
+        mutation = np.random.rand(len(next_)) < mutation_rate
+        return np.logical_xor(next_, mutation).astype(int)
+
+    state = np.zeros(width, dtype=int)
+    state[width // 2] = 1
+    history = [state]
+    for _ in range(steps):
+        state = step(state)
+        history.append(state.copy())
+
+    os.makedirs(output_dir, exist_ok=True)
+    path = os.path.join(output_dir, "regla90.npy")
+    np.save(path, np.array(history))
+    return path
+
 def regla_90_step(current_state):
     """Aplica la regla 90 a una línea 1D."""
     padded = np.pad(current_state, (1, 1), mode='wrap')  # Bordes periódicos
