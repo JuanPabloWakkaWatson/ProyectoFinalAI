@@ -7,6 +7,9 @@ from datetime import datetime
 from automaton_gol_mutated import generar_gol
 from generar_regla90_mutada import generar_regla90
 
+# Este código fusiona evoluciones del GOL mutado y Regla 90 
+# en una sola pieza MIDI de múltiples canales
+
 # Generar evoluciones directamente
 path_gol1 = generar_gol()
 path_gol2 = generar_gol()

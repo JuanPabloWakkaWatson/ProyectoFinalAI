@@ -3,6 +3,12 @@ import numpy as np
 import os
 from datetime import datetime
 
+# Este código genera una evolución del Game of Life con mutaciones aleatorias
+
+# Generar una evolución del autómata celular de Conway (GoL) 
+# con una tasa de mutación configurable y 
+# guardar el resultado como un archivo .npy.
+
 def generar_gol(steps=128, grid_size=(32, 32), mutation_rate=0.02, output_dir="GoL/evolucionesGoL/tmp"):
     initial = np.random.choice([0, 1], size=grid_size, p=[0.7, 0.3])
 
@@ -10,6 +16,7 @@ def generar_gol(steps=128, grid_size=(32, 32), mutation_rate=0.02, output_dir="G
         return sum(grid[(x + dx) % grid.shape[0], (y + dy) % grid.shape[1]]
                    for dx in [-1, 0, 1] for dy in [-1, 0, 1] if not (dx == 0 and dy == 0))
 
+    # Pasos que le llevará a la evolución
     def step(grid):
         new_grid = np.zeros_like(grid)
         for x in range(grid.shape[0]):
@@ -33,7 +40,7 @@ def generar_gol(steps=128, grid_size=(32, 32), mutation_rate=0.02, output_dir="G
     np.save(path, np.array(history))
     return path
 
-
+# Contar vecinos 
 def count_neighbors(grid, x, y):
     total = 0
     for dx in [-1, 0, 1]:
@@ -44,6 +51,7 @@ def count_neighbors(grid, x, y):
             total += grid[nx, ny]
     return total
 
+# Evoluciona el modelo
 def mutated_game_of_life_step(grid, mutation_rate=0.02):
     new_grid = np.zeros_like(grid)
     for x in range(grid.shape[0]):
@@ -57,6 +65,7 @@ def mutated_game_of_life_step(grid, mutation_rate=0.02):
     new_grid = np.logical_xor(new_grid, mutation_mask).astype(int)
     return new_grid
 
+# Simula el GOL y devuelve las matrices de la evolución
 def run_automaton(initial_grid, steps=128, mutation_rate=0.02):
     history = [initial_grid.copy()]
     current_grid = initial_grid.copy()

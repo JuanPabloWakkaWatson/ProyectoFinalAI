@@ -6,6 +6,9 @@ import numpy as np
 from mido import MidiFile, MidiTrack, Message, MetaMessage, bpm2tempo
 from datetime import datetime
 
+# Este código organiza sesiones, y combina evoluciones de autómatas 
+# celulares con lógica MIDI para producir piezas musicales completas
+
 # Importar funciones de generación
 sys.path.append(os.path.abspath("GoL"))
 from .automaton_gol_mutated import generar_gol

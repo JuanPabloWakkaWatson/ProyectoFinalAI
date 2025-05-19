@@ -3,12 +3,16 @@ import json
 import numpy as np
 from .metrics import calculate_entropy, density_score, variation_score, symmetry_score
 
+# Este código se encarga de leer los datos generados por los autómatas,
+# calcular métricas y guardar los resultados en archivos .json.
+# Genera metadata.json y metadata_summary.json
+
 def analizar_archivo(path):
     arr = np.load(path)
     return {
-        "entropia": round(calculate_entropy(arr), 4),
-        "densidad": round(density_score(arr), 4),
-        "variacion": round(variation_score(arr), 4),
+        "entropia": round(calculate_entropy(arr), 4), # aleatoriedad de la matriz
+        "densidad": round(density_score(arr), 4), # celdas activas
+        "variacion": round(variation_score(arr), 4), # cambios entre filas
         "simetria": round(symmetry_score(arr), 4)
     }
 
@@ -24,11 +28,13 @@ def analizar_sesion(session_path):
         if os.path.exists(path):
             resultados[nombre] = analizar_archivo(path)
 
+    # guardar el resultado 
     metadata_path = os.path.join(session_path, "metadata.json")
     with open(metadata_path, "w") as f:
         json.dump(resultados, f, indent=2)
     print(f"✅ Guardado: {metadata_path}")
 
+# cada composición puede tener varias sesiones
 def analizar_composicion(composicion_path):
     resumen = {}
 

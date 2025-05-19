@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import os
 
+# Este código permite visualizar la evolución de un autómata celular 
+# unidimensional (Regla 90), destacando visualmente los cambios de 
+# estado entre generaciones mediante colores.
+
 # ==== SELECCIÓN INTERACTIVA DE CARPETA ====
 base_dir = os.path.join("Regla90", "evoluciones_1d")
 folders = sorted([f for f in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, f))])

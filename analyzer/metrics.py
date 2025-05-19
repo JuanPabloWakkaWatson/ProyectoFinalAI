@@ -1,6 +1,10 @@
 import numpy as np
 from scipy.stats import entropy as shannon_entropy
 
+# Este código define métricas cuantitativas para analizar la evolución de 
+# patrones generados por autómatas celulares
+
+# mide la cantidad de desorden o aleatoriedad en cada paso del tiempo
 def calculate_entropy(grid):
     """Calcula la entropía promedio de una evolución."""
     if grid.ndim == 3:
@@ -14,10 +18,12 @@ def calculate_entropy(grid):
     else:
         return 0.0
 
+# calcula la proporción de celdas activas (1) a lo largo de la evolución
 def density_score(grid):
     """Proporción de celdas activas promedio."""
     return np.mean(grid)
 
+# mide cuánto cambia el patrón entre pasos sucesivos
 def variation_score(grid):
     """Porcentaje de frames que cambian significativamente."""
     if grid.ndim == 3:
@@ -30,6 +36,7 @@ def variation_score(grid):
         return 0.0
     return np.mean(diffs)
 
+# evalúa cuánto se parece el patrón a su reflejo horizontal
 def symmetry_score(grid):
     """Mide cuán simétrico es el patrón por reflexión horizontal."""
     if grid.ndim == 3:
