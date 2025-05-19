@@ -75,10 +75,9 @@ def agregar_gol_a_track(evolution, track, canal, pitch_range, ticks_per_beat, su
                     time = delta_time if not frame_has_note else 0
                     frame_has_note = True
 
-                    note_duration = ticks_per_beat // (subdivision * 2)  # que dure 1/8 de beat
-
                     track.append(Message('note_on', note=pitch, velocity=velocity, time=time, channel=canal))
-                    track.append(Message('note_off', note=pitch, velocity=velocity, time=note_duration, channel=canal))
+                    track.append(Message('note_off', note=pitch, velocity=velocity, time=duration, channel=canal))
+
 
 
 
@@ -96,10 +95,8 @@ def agregar_r90_a_track(evolution, track, canal, pitch_range, ticks_per_beat, su
                 time = delta_time if not frame_has_note else 0
                 frame_has_note = True
 
-                note_duration = ticks_per_beat // (subdivision * 2)  # que dure 1/8 de beat
-
                 track.append(Message('note_on', note=pitch, velocity=velocity, time=time, channel=canal))
-                track.append(Message('note_off', note=pitch, velocity=velocity, time=note_duration, channel=canal))
+                track.append(Message('note_off', note=pitch, velocity=velocity, time=duration, channel=canal))
 
 # ==== Generación de una sesión ====
 
