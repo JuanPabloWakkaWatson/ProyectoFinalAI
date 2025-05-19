@@ -4,9 +4,8 @@ def pitch_from_x(x, width, low=40, high=80):
     scale_range = high - low
     return low + int((x / width) * scale_range)
 
-def ticks_from_frame(frame, ticks_per_beat=480, subdivision=4):
-    """Convierte un frame a ticks MIDI (1/subdivision nota por frame)."""
-    return int((frame * ticks_per_beat) / subdivision)
+def ticks_from_frame(frame_idx, ticks_per_beat, subdivision):
+    return frame_idx * (ticks_per_beat // subdivision)
 
 def scale_major(): return [0, 2, 4, 5, 7, 9, 11]
 def scale_minor(): return [0, 2, 3, 5, 7, 8, 10]
