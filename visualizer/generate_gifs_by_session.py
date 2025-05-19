@@ -49,6 +49,8 @@ def procesar_composicion(composicion_dir):
         session_path = os.path.join(composicion_dir, session_name)
         if not os.path.isdir(session_path):
             continue
+        if not session_name.startswith("session_"):
+            continue
 
         print(f"🎞️ Procesando {session_name}")
 
@@ -59,11 +61,20 @@ def procesar_composicion(composicion_dir):
         }
 
         if os.path.exists(paths["gol1"]):
-            generar_gif_gol(paths["gol1"], os.path.join(session_path, "gol1.gif"))
+            output_gif = os.path.join(session_path, "gol1", "gol.gif")
+            print(f"📤 Guardando GIF en: {output_gif}")
+            generar_gif_gol(paths["gol1"], output_gif)
+
         if os.path.exists(paths["gol2"]):
-            generar_gif_gol(paths["gol2"], os.path.join(session_path, "gol2.gif"))
+            output_gif = os.path.join(session_path, "gol2", "gol.gif")
+            print(f"📤 Guardando GIF en: {output_gif}")
+            generar_gif_gol(paths["gol2"], output_gif)
+
         if os.path.exists(paths["regla90"]):
-            generar_gif_r90(paths["regla90"], os.path.join(session_path, "regla90.gif"))
+            output_gif = os.path.join(session_path, "regla90", "regla90.gif")
+            print(f"📤 Guardando GIF en: {output_gif}")
+            generar_gif_r90(paths["regla90"], output_gif)
+
 
 # === MAIN ===
 if __name__ == "__main__":

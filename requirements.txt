@@ -4,3 +4,5 @@ mido>=1.2.10
 python-rtmidi>=1.5.6 ; platform_system != 'Windows'  # opcional para enviar MIDI en tiempo real
 scipy>=1.10
 moviepy>=1.0
+pandas>=2.2.2
+seaborn>=0.13.2

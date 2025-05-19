@@ -8,12 +8,12 @@ from datetime import datetime
 
 # Importar funciones de generación
 sys.path.append(os.path.abspath("GoL"))
-from automaton_gol_mutated import generar_gol
+from .automaton_gol_mutated import generar_gol
 sys.path.append(os.path.abspath("Regla90"))
-from generar_regla90_mutada import generar_regla90
+from .generar_regla90_mutada import generar_regla90
 
 # Importar utilidades MIDI
-from utils_midi import pitch_from_x, ticks_from_frame, quantize_to_scale
+from .utils_midi import pitch_from_x, ticks_from_frame, quantize_to_scale
 
 # ==== Utilidades de instrumentación y tempo ====
 
@@ -147,6 +147,19 @@ def generar_multiples_sesiones(n, instr1, instr2, instr3, tempo):
     for i in range(1, n + 1):
         session_dir = os.path.join(composicion_dir, f"session_{i}")
         generar_sesion(session_dir, instr1, instr2, instr3, tempo)
+    
+    return composicion_dir
+
+
+def generar_una_sesion_directa(instr1, instr2, instr3, tempo):
+    from datetime import datetime
+    base_root = "compositions"
+    os.makedirs(base_root, exist_ok=True)
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    session_dir = os.path.join(base_root, f"session_{timestamp}")
+    generar_sesion(session_dir, instr1, instr2, instr3, tempo)
+    return session_dir
 
 # ==== MAIN ====
 

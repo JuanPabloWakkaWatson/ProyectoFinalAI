@@ -30,5 +30,21 @@ def variation_score(grid):
         return 0.0
     return np.mean(diffs)
 
-# (Opcional futuro) puedes añadir:
-# def symmetry_score(grid): ...
+def symmetry_score(grid):
+    """Mide cuán simétrico es el patrón por reflexión horizontal."""
+    if grid.ndim == 3:
+        scores = []
+        for frame in grid:
+            left = frame[:, :frame.shape[1] // 2]
+            right = np.fliplr(frame[:, frame.shape[1] // 2:])
+            min_cols = min(left.shape[1], right.shape[1])
+            score = np.mean(left[:, :min_cols] == right[:, :min_cols])
+            scores.append(score)
+        return np.mean(scores)
+    elif grid.ndim == 2:
+        left = grid[:, :grid.shape[1] // 2]
+        right = np.fliplr(grid[:, grid.shape[1] // 2:])
+        min_cols = min(left.shape[1], right.shape[1])
+        return np.mean(left[:, :min_cols] == right[:, :min_cols])
+    else:
+        return 0.0
