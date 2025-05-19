@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
+# Este códgio genera gráficas para analizar visualmente la evolución 
+# de las métricas por sesi´n y por modelo a partir de metadata_summary.json
+
 def visualizar_metricas(composicion_path):
     resumen_path = os.path.join(composicion_path, "metadata_summary.json")
     if not os.path.exists(resumen_path):

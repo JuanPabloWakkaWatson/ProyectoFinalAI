@@ -5,6 +5,10 @@ from mido import Message, MidiFile, MidiTrack
 import os
 import sys
 
+# Este código convierte una evolución 1D generada por el autómata 
+# Regla 90 en un archivo MIDI .mid, mapeando celdas activas a 
+# notas musicales.
+
 # Agregar path raíz para importar utils_midi
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from composer.utils_midi import pitch_from_x, ticks_from_frame, quantize_to_scale

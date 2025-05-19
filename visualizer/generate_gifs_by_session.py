@@ -4,6 +4,11 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.colors import ListedColormap
 
+# Este código genera animaciones en formato GIF a partir de 
+# archivos .npy que contienen la evolución temporal de autómatas 
+# celulares GOL1 y 2 y Regla 90
+
+# GOL es bidimensional y R90 es unidimensional
 def generar_gif_gol(path_npy, output_path):
     evolution = np.load(path_npy)
 
@@ -44,6 +49,7 @@ def generar_gif_r90(path_npy, output_path):
     ani.save(output_path, writer="pillow", fps=10)
     plt.close(fig)
 
+# El resultado se guarda como un .GIF
 def procesar_composicion(composicion_dir):
     for session_name in sorted(os.listdir(composicion_dir)):
         session_path = os.path.join(composicion_dir, session_name)

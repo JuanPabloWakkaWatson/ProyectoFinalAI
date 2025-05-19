@@ -3,10 +3,16 @@ import numpy as np
 import os
 from datetime import datetime
 
+# Este código genera una evolución 1D del autómata Regla 90 con un
+# porcentaje configurable de mutaciones aleatorias, y la guarda 
+# como archivo .npy.
+
+# Generar la evolución
 def generar_regla90(steps=128, width=64, mutation_rate=0.02, output_dir="Regla90/evoluciones_1d/tmp"):
     import numpy as np
     import os
 
+    # Pasos de la evolución 
     def step(current):
         padded = np.pad(current, (1, 1), mode='wrap')
         next_ = np.bitwise_xor(padded[:-2], padded[2:])
@@ -25,12 +31,14 @@ def generar_regla90(steps=128, width=64, mutation_rate=0.02, output_dir="Regla90
     np.save(path, np.array(history))
     return path
 
+# Calcular el siguiente paso
 def regla_90_step(current_state):
     """Aplica la regla 90 a una línea 1D."""
     padded = np.pad(current_state, (1, 1), mode='wrap')  # Bordes periódicos
     next_state = np.bitwise_xor(padded[:-2], padded[2:])
     return next_state
 
+# Aplicar las mutaciones en cada paso
 def run_automaton_1d(initial_state, steps=128, mutation_rate=0.02):
     history = [initial_state.copy()]
     current_state = initial_state.copy()

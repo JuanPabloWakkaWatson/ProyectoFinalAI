@@ -5,6 +5,10 @@ import matplotlib.animation as animation
 import os
 from datetime import datetime
 
+# Este código visualiza la evolución de un autómata celular 
+# bidimensional (GOL) a partir de un archivo evolution.npy, 
+# generando un GIF animado en escala de grises.
+
 # ==== SELECCIÓN INTERACTIVA DE CARPETA ====
 base_dir = os.path.join("GoL", "evolucionesGoL")
 folders = sorted([f for f in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, f))])

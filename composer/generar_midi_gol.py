@@ -6,6 +6,10 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from composer.utils_midi import pitch_from_x, ticks_from_frame, quantize_to_scale
 
+# Este código permite seleccionar una evolución del GOL mutado desde
+# una carpeta específica y generar un archivo .mid con sonidos a 
+# partir de esa evolución.
+
 # ==== SELECCIÓN DE CARPETA ====
 base_dir = "GoL/evolucionesGoL"
 folders = sorted([f for f in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, f))])

@@ -2,6 +2,12 @@ import os
 import subprocess
 from concurrent.futures import ProcessPoolExecutor
 
+# Este código automatiza la conversión de archivos MIDI generados por 
+# el sistema (ambient_combinado.mid) a archivos de audio .wav 
+# utilizando FluidSynth y un soundfont .SF2.
+
+# Este módulo sólo será usado si el sistema operativo es Linux
+
 SOUNDFONT = os.path.expanduser("~/soundfonts/FluidR3_GM2-2.SF2")
 BASE_DIR = "compositions"
 
