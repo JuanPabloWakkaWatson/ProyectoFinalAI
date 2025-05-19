@@ -60,43 +60,33 @@ def agregar_gol_a_track(evolution, track, canal, pitch_range, ticks_per_beat, su
     width = evolution.shape[2]
     delta_time = ticks_per_beat // subdivision
 
-    current_tick = 0  # acumulador de tiempo
-
     for frame in evolution:
-        frame_has_note = False
+        note = None
         for x in range(frame.shape[0]):
             for y in range(frame.shape[1]):
                 if frame[x, y] == 1:
-                    pitch = quantize_to_scale(pitch_from_x(y, width, *pitch_range))
-                    velocity = 50
-                    duration = delta_time
+                    note = quantize_to_scale(pitch_from_x(y, width, *pitch_range))
+                    break
+            if note: break
 
-                    # La primera nota de este frame tiene delta positiva
-                    time = delta_time if not frame_has_note else 0
-                    frame_has_note = True
-
-                    track.append(Message('note_on', note=pitch, velocity=velocity, time=time, channel=canal))
-                    track.append(Message('note_off', note=pitch, velocity=velocity, time=duration, channel=canal))
-
-
-
+        if note:
+            track.append(Message('note_on', note=note, velocity=64, time=delta_time, channel=canal))
+            track.append(Message('note_off', note=note, velocity=64, time=0, channel=canal))
 
 def agregar_r90_a_track(evolution, track, canal, pitch_range, ticks_per_beat, subdivision):
-    width = evolution.shape[1]  # ✅ Corrección aquí
+    width = evolution.shape[1]
     delta_time = ticks_per_beat // subdivision
 
     for row in evolution:
-        frame_has_note = False
+        note = None
         for i, cell in enumerate(row):
             if cell == 1:
-                pitch = quantize_to_scale(pitch_from_x(i, width, *pitch_range))
-                velocity = 50
-                duration = delta_time
-                time = delta_time if not frame_has_note else 0
-                frame_has_note = True
+                note = quantize_to_scale(pitch_from_x(i, width, *pitch_range))
+                break
 
-                track.append(Message('note_on', note=pitch, velocity=velocity, time=time, channel=canal))
-                track.append(Message('note_off', note=pitch, velocity=velocity, time=duration, channel=canal))
+        if note:
+            track.append(Message('note_on', note=note, velocity=64, time=delta_time, channel=canal))
+            track.append(Message('note_off', note=note, velocity=64, time=0, channel=canal))
 
 # ==== Generación de una sesión ====
 
@@ -130,9 +120,9 @@ def generar_sesion(session_dir: str, instr1, instr2, instr3, tempo):
     agregar_gol_a_track(evo_gol2, track2, canal=1, pitch_range=(70, 90), ticks_per_beat=ticks_per_beat, subdivision=subdivision)
     agregar_r90_a_track(evo_r90, track3, canal=2, pitch_range=(50, 75), ticks_per_beat=ticks_per_beat, subdivision=subdivision)
 
-    track1.append(MetaMessage('end_of_track', time=480))
-    track2.append(MetaMessage('end_of_track', time=480))
-    track3.append(MetaMessage('end_of_track', time=480))
+    track1.append(MetaMessage('end_of_track', time=0))
+    track2.append(MetaMessage('end_of_track', time=0))
+    track3.append(MetaMessage('end_of_track', time=0))
 
     mid_path = os.path.join(session_dir, "ambient_combinado.mid")
     mid.save(mid_path)
